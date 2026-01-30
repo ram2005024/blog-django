@@ -4,85 +4,67 @@
   Home
 {% endblock %}
 {% block content %}
-  <div class="w-full h-full">
-    <div class="w-10/12 mx-auto flex flex-col pt-4 gap-4">
-      <nav class="flex justify-between w-full">
-        <span class="text-sm text-gray-500">Django Blog</span>
-        <div class="flex gap-2">
-          <button class="px-4 cursor-pointer p-2 bg-amber-400 rounded-md text-sm text-black">Login</button>
-          <button class="px-4 cursor-pointer rounded-md bg-slate-800 text-white p-2">Register</button>
-        </div>
-      </nav>
-      <div class="flex w-full justify-between">
-        <span class="text-sm text-gray-500">World</span>
-        <span class="text-sm text-gray-500">World</span>
-        <span class="text-sm text-gray-500">World</span>
-        <span class="text-sm text-gray-500">World</span>
-        <span class="text-sm text-gray-500">World</span>
-        <span class="text-sm text-gray-500">World</span>
-        <span class="text-sm text-gray-500">World</span>
-        <span class="text-sm text-gray-500">World</span>
-        <span class="text-sm text-gray-500">World</span>
-        <span class="text-sm text-gray-500">World</span>
-        <span class="text-sm text-gray-500">World</span>
-      </div>
-      <main class="mt-8">
+  <main class="mt-8">
+    {% for featured in featuredPosts %}
+      {% if forloop.first %}
         <div style="
-
-        background-image: url('{% static 'img/cricket.jpg' %}')" class="w-full relative p-6 bg-cover rounded-md flex-col space-y-6 h-56 text-white">
+                background-image: url('{{ featured.featured_image.url }}')" class="w-full relative p-6 bg-cover rounded-md flex-col space-y-6 h-56 text-white">
           <div class="absolute inset-0 opacity-70 h-full bg-black/70"></div>
           <div class="relative z-10 flex flex-col gap-5">
-            <h2 class="italic text-6xl max-sm:text-2xl font-semibold">Title of featured blog post</h2>
+            <h2 class="font-serif italic text-6xl max-sm:text-2xl font-semibold">{{ featured.title }}</h2>
             <div>
-              <p class="text-xl text-gray-200">Lorem ipsum dolor sit amet consectetur adipisicing elit...</p>
-              <a href="#" class="decoration-0 text-xl font-bold">Continue reading</a>
+              <p class="text-xl text-gray-200">{{ featured.short_description }}</p>
+              <a href="#" class="decoration-0 text-xl font-bold">Continue reading...</a>
             </div>
           </div>
         </div>
-        <div class="mt-6 flex flex-col">
-          <div class="flex justify-between w-full">
-            <div class="px-4 border border-gray-100 rounded-lg">
-              <h2 class="text-xl mb-3 font-semibold">Post title</h2>
-              <span class="text-xs text-gray-400">{% now 'Y-m-d' %}</span>
-              <p class="text-gray-600 w-lg">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+      {% endif %}
+    {% endfor %}
+    <div class="mt-6 flex flex-col">
+      <h2 class="font-serif text-4xl font-bold text-amber-600 mb-5">Featured Posts</h2>
+      <div class="flex justify-between w-full">
+        {% for featured in featuredPosts %}
+          {% if not forloop.first %}
+            <div class="px-4 border border-gray-100 rounded-lg w-xl">
+              <h2 class="font-serif text-2xl mb-3 font-semibold">{{ featured.title }}</h2>
+              <span class="text-xs text-gray-400">{{ featured.created_at|timesince }} ago | {{ featured.author }}</span>
+              <p class="text-gray-600 w-fit">{{ featured.short_description|truncatewords:20 }}</p>
             </div>
-            <div class="px-4 border border-gray-100 rounded-lg">
-              <h2 class="text-xl mb-3 font-semibold">Post title</h2>
-              <span class="text-sm text-gray-400">{% now 'Y-m-d' %}</span>
-              <p class="text-gray-600 w-lg">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-            </div>
-          </div>
-          <div class="mt-4 flex gap-6">
+          {% endif %}
+        {% endfor %}
+      </div>
+      <h2 class="font-serif text-4xl font-bold mt-5 text-amber-600">Recent Posts</h2>
+
+      <div class="mt-4 flex gap-6">
+        <div class="flex flex-col gap-8">
+          {% for post in posts %}
             <div class="flex flex-col w-9/12">
-              <h2 class="text-xl font-semibold mb-3">Sample Blog Post</h2>
+              <h2 class="font-semibold mb-3 font-serif text-2xl">{{ post.title }}</h2>
               <div class="flex gap-2 mb-2">
-                <span class="text-gray-400">{% now 'Y-m-d' %}</span>
-                <span class="text-blue-700 hover:underline">by Shekhar</span>
+                <span class="text-gray-400 text-sm">{{ post.created_at|timesince }}</span>
+                <span class="text-blue-700 hover:underline text-sm">by {{ post.author }}</span>
               </div>
               <div class="flex flex-col gap-3">
-                <p class="text-gray-500">This blog post shows a few different types of content that's supported and styled with Bootstrap. Basic typography, images, and code are all supported.</p>
-                <p class="text-gray-500">Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Aenean eu leo quam. Pellentesque ornare sem lacinia quam venenatis vestibulum. Sed posuere consectetur est at lobortis. Cras mattis consectetur purus sit amet fermentum.</p>
+                <p class="text-gray-500">{{ post.short_description|truncatewords:15 }}</p>
+                <p class="text-gray-500">{{ post.short_body|truncatewords:20 }}</p>
               </div>
             </div>
-            <div class="flex flex-col w-xl">
-              <div class="flex flex-col bg-slate-50 rounded-lg px-2 py-4">
-                <strong class="font-bold mb-2">About</strong>
-                <p class="text-gray-600 text-sm">Lorem ipsum dolor sit amet consectetur adipisicing elit. Voluptate officiis et veritatis molestiae dicta doloremque vel quos magnam saepe accusamus ipsam ad atque a veniam eligendi maxime quaerat, temporibus ipsa?</p>
-              </div>
-              <div class="mt-4">
-                <span class="text-2xl font-semibold italic">Follow us</span>
-                <div class="flex flex-col text-blue-500 mt-2" gap-2>
-                  <a href="#">Github</a>
-                  <a href="#">Linkedin</a>
-                </div>
-              </div>
+          {% endfor %}
+        </div>
+        <div class="flex flex-col w-xl">
+          <div class="flex flex-col bg-slate-50 rounded-lg px-2 py-4">
+            <strong class="font-bold mb-2">About</strong>
+            <p class="text-gray-600 text-sm">Lorem ipsum dolor sit amet consectetur adipisicing elit. Voluptate officiis et veritatis molestiae dicta doloremque vel quos magnam saepe accusamus ipsam ad atque a veniam eligendi maxime quaerat, temporibus ipsa?</p>
+          </div>
+          <div class="mt-4">
+            <span class="text-2xl font-semibold italic">Follow us</span>
+            <div class="flex flex-col text-blue-500 mt-2" gap-2>
+              <a href="#">Github</a>
+              <a href="#">Linkedin</a>
             </div>
           </div>
         </div>
-      </main>
+      </div>
     </div>
-    <footer class="absolute bottom-0 left-5 text-sm text-gray-500">
-      Django built with ❤️ by <span class="text-blue-600">Ram Sharma</span>
-    </footer>
-  </div>
+  </main>
 {% endblock %}

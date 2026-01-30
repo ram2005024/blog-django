@@ -3,4 +3,6 @@
 @theme {
   --font-sans: "Outfit", sans-serif; 
   --font-mono: "Fira Code", monospace; 
+   --font-serif: "Times New Roman", Times, serif;
+
 }

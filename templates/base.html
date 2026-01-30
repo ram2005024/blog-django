@@ -9,8 +9,30 @@
     </title>
   </head>
   <body class="font-sans">
-    {% block content %}
+    <div class="w-full min-h-screen">
+      <div class="w-10/12 mx-auto flex flex-col pt-4 gap-4">
+        {% comment %}Header part{% endcomment %}
+        <nav class="flex justify-between w-full">
+          <h2 class="text-5xl font-serif">Django Blog</h2>
+          <div class="flex gap-2">
+            <button class="px-4 cursor-pointer p-2 bg-amber-400 rounded-md text-sm text-black">Login</button>
+            <button class="px-4 cursor-pointer rounded-md bg-slate-800 text-white p-2">Register</button>
+          </div>
+        </nav>
+        <div class="flex w-full justify-between">
+          {% for category in categories %}
+            <a href="{% url 'get_category_posts' category.id %}">{{ category }}</a>
+          {% endfor %}
+        </div>
+        {% comment %}Main part{% endcomment %}
+        {% block content %}
 
-    {% endblock %}
+        {% endblock %}
+        {% comment %}Footer part{% endcomment %}
+        <footer class="text-sm text-gray-500 text-end pr-9">
+          Django built with ❤️ by <span class="text-blue-600">Ram Sharma</span>
+        </footer>
+      </div>
+    </div>
   </body>
 </html>
