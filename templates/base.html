@@ -1,6 +1,7 @@
 {% load static %}
 <html lang="en">
   <head>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css" integrity="sha512-2SwdPD6INVrV/lHTZbO2nodKhrnDdJK9/kg2XD1r9uGqPo1cUbujc+IYdlYdEErWNu69gVcYgdxlmVmzTWnetw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
     <link rel="stylesheet" href="{% static 'src/css/output.css' %}" />
     <title>
       Blog{% block title %}
@@ -12,7 +13,7 @@
     <div class="w-full min-h-screen">
       <div class="w-10/12 mx-auto flex flex-col pt-4 gap-4">
         {% comment %}Header part{% endcomment %}
-        <nav class="flex justify-between w-full">
+        <nav class="flex justify-between w-full items-center">
           <h2 class="text-5xl font-serif"><a href="{% url 'home' %}">Django Blog</a></h2>
           <!-- Search widget -->
           <div class="bg-white border border-gray-200 rounded mb-6">
@@ -21,10 +22,18 @@
               <button type="submit" class="bg-blue-600 cursor-pointer text-white px-4 py-2 rounded-r hover:bg-blue-700" id="button-search" type="button">Go!</button>
             </form>
           </div>
-          <div class="flex gap-2">
-            <button class="px-4 cursor-pointer p-2 bg-amber-400 rounded-md text-sm text-black">Login</button>
-            <button class="px-4 cursor-pointer rounded-md bg-slate-800 text-white p-2">Register</button>
-          </div>
+
+          {% if not user.is_authenticated %}
+            <div class="flex gap-2">
+              <a href="{% url 'login' %}" class="px-4 cursor-pointer p-2 h-fit bg-amber-400 rounded-md text-black">Login</a>
+              <a href="{% url 'register' %}" class="px-4 cursor-pointer h-fit rounded-md bg-slate-800 text-white p-2">Register</a>
+            </div>
+          {% else %}
+            <div class="flex gap-2 items-center">
+              <span>{{ user }}</span>
+              <a href="{% url 'logout' %}" class="px-4 cursor-pointer h-fit rounded-md bg-emerald-500 text-white p-2">Logout</a>
+            </div>
+          {% endif %}
         </nav>
         <div class="flex w-full justify-between">
           {% for category in categories %}
