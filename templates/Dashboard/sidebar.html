@@ -7,6 +7,10 @@
   <a href="{% url 'categories_dashboard' %}" class="w-xs py-2 rounded-sm pl-3 transition-colors duration-500 ease-in  {% if 'dashboard/categories' in request.path %}
     bg-amber-400
   {% endif %}">Categories</a>
-  <a href="" class="w-xs py-2 rounded-sm pl-3">Posts</a>
+  <a href="{% url 'posts' %}" class="w-xs py-2 rounded-sm pl-4 
+  {% if 'dashboard/posts' in request.path %}
+    bg-amber-400
+  {% endif %}
+    ">Posts</a>
   <a href="" class="w-xs py-2 rounded-sm pl-3">Logout</a>
 </div>

@@ -11,8 +11,8 @@ urlpatterns = [
     # search blog
     path('blogs/search/',BlogView.search_blog,name='search_blog'),
     path('blogs/<slug:pId>',BlogView.single_blog,name="single_blog"),
-    path("register",views.register,name='register'),
-    path("login",views.user_login,name="login"),
-    path("logout",views.user_logout,name="logout"),
-    path("dashboard",include('dashboard.urls'))
+    path("register/",views.register,name='register'),
+    path("login/",views.user_login,name="login"),
+    path("logout/",views.user_logout,name="logout"),
+    path("dashboard/",include('dashboard.urls'))
 ]+static(settings.MEDIA_URL,document_root=settings.MEDIA_ROOT)
