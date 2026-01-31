@@ -14,7 +14,7 @@
             <h2 class="font-serif italic text-6xl max-sm:text-2xl font-semibold">{{ featured.title }}</h2>
             <div>
               <p class="text-xl text-gray-200">{{ featured.short_description }}</p>
-              <a href="#" class="decoration-0 text-xl font-bold">Continue reading...</a>
+              <a href="{% url 'single_blog' featured.slug %}" class="decoration-0 text-xl font-bold">Continue reading...</a>
             </div>
           </div>
         </div>
@@ -25,8 +25,8 @@
       <div class="flex justify-between w-full">
         {% for featured in featuredPosts %}
           {% if not forloop.first %}
-            <div class="px-4 border border-gray-100 rounded-lg w-xl">
-              <h2 class="font-serif text-2xl mb-3 font-semibold">{{ featured.title }}</h2>
+            <div class="px-4 border border-gray-100 rounded-lg w-xl transition-colors transform ease-in hover:bg-slate-50">
+              <h2 class="font-serif text-2xl mb-3 font-semibold"><a href="{% url 'single_blog' featured.slug %}">{{ featured.title }}</a></h2>
               <span class="text-xs text-gray-400">{{ featured.created_at|timesince }} ago | {{ featured.author }}</span>
               <p class="text-gray-600 w-fit">{{ featured.short_description|truncatewords:20 }}</p>
             </div>
@@ -39,7 +39,7 @@
         <div class="flex flex-col gap-8">
           {% for post in posts %}
             <div class="flex flex-col w-9/12">
-              <h2 class="font-semibold mb-3 font-serif text-2xl">{{ post.title }}</h2>
+              <h2 class="font-semibold mb-3 font-serif text-2xl"><a href="{% url 'single_blog' post.slug %}">{{ post.title }}</a></h2>
               <div class="flex gap-2 mb-2">
                 <span class="text-gray-400 text-sm">{{ post.created_at|timesince }}</span>
                 <span class="text-blue-700 hover:underline text-sm">by {{ post.author }}</span>
@@ -52,15 +52,21 @@
           {% endfor %}
         </div>
         <div class="flex flex-col w-xl">
-          <div class="flex flex-col bg-slate-50 rounded-lg px-2 py-4">
-            <strong class="font-bold mb-2">About</strong>
-            <p class="text-gray-600 text-sm">Lorem ipsum dolor sit amet consectetur adipisicing elit. Voluptate officiis et veritatis molestiae dicta doloremque vel quos magnam saepe accusamus ipsam ad atque a veniam eligendi maxime quaerat, temporibus ipsa?</p>
-          </div>
+          {% if about %}
+            <div class="flex flex-col bg-slate-50 rounded-lg px-2 py-4">
+              <strong class="font-bold mb-2">About</strong>
+              <p class="text-gray-600 text-sm">{{ about }}</p>
+            </div>
+          {% endif %}
+
           <div class="mt-4">
             <span class="text-2xl font-semibold italic">Follow us</span>
-            <div class="flex flex-col text-blue-500 mt-2" gap-2>
-              <a href="#">Github</a>
-              <a href="#">Linkedin</a>
+            <div class="flex flex-col text-blue-500 mt-2 gap-2">
+              {% if social_links %}
+                {% for link in social_links %}
+                  <a href="{{ link.social_link }}">{{ link.social_platform }}</a>
+                {% endfor %}
+              {% endif %}
             </div>
           </div>
         </div>

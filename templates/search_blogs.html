@@ -1,12 +1,8 @@
 {% extends 'base.html' %}
-{% load static %}
-{% block title %}
-  Home
-{% endblock %}
 {% block content %}
   <main>
     <div class="mt-6 flex flex-col">
-      <h2 class="font-serif text-4xl font-bold text-amber-600 mb-5">Category :{{ category.category_name }}</h2>
+      <h2 class="font-serif text-4xl font-bold text-amber-600 mb-5">Search Title: {{ keyword }}</h2>
       <h2 class="font-serif text-4xl font-bold mt-5">Posts</h2>
       <div class="mt-4 flex gap-6">
         <div class="flex flex-col gap-8">

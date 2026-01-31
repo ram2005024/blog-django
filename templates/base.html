@@ -13,7 +13,14 @@
       <div class="w-10/12 mx-auto flex flex-col pt-4 gap-4">
         {% comment %}Header part{% endcomment %}
         <nav class="flex justify-between w-full">
-          <h2 class="text-5xl font-serif">Django Blog</h2>
+          <h2 class="text-5xl font-serif"><a href="{% url 'home' %}">Django Blog</a></h2>
+          <!-- Search widget -->
+          <div class="bg-white border border-gray-200 rounded mb-6">
+            <form action="{% url 'search_blog' %}" method="get" class="flex">
+              <input name="keyword" value="{{ keyword }}" class="flex-1 border border-gray-300 rounded-l px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500" type="text" placeholder="Search blog..." aria-label="Enter search term..." aria-describedby="button-search" />
+              <button type="submit" class="bg-blue-600 cursor-pointer text-white px-4 py-2 rounded-r hover:bg-blue-700" id="button-search" type="button">Go!</button>
+            </form>
+          </div>
           <div class="flex gap-2">
             <button class="px-4 cursor-pointer p-2 bg-amber-400 rounded-md text-sm text-black">Login</button>
             <button class="px-4 cursor-pointer rounded-md bg-slate-800 text-white p-2">Register</button>
