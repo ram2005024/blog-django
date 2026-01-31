@@ -1,0 +1,41 @@
+{% extends 'base.html' %}
+{% block content %}
+  <div class="w-11/12 mx-auto max-sm:w-full mt-10">
+    <div class="flex gap-10">
+      {% comment %}Side bar{% endcomment %}
+      {% include 'Dashboard/sidebar.html' %}
+      {% comment %}Right section{% endcomment %}
+      <div class="flex flex-col gap-4 w-full">
+        <h1 class="text-2xl text-center mb-4">All Categories</h1>
+
+        <a href="{% url 'add_new_category' %}" class="px-4 w-fit self-end cursor-pointer p-2 h-fit bg-amber-400 rounded-md text-black">Add new</a>
+        <div class="flex flex-col w-full h-80 overflow-y-scroll">
+          <table class="table-auto">
+            <thead>
+              <tr>
+                <th class="p-2">SN.</th>
+                <th class="p-2">Category</th>
+                <th class="p-2">Updated at</th>
+                <th class="p-2">Action</th>
+              </tr>
+            </thead>
+            <tbody>
+              {% for cat in categories %}
+                <tr class="transition-all duration-200 cursor-pointer ease-in-out hover:bg-gray-100">
+                  <td class="p-2 text-center">{{ forloop.counter }}</td>
+                  <td class="p-2 text-center">{{ cat.category_name }}</td>
+                  <td class="p-2 text-center">{{ cat.updated_at }}</td>
+                  <td class="p-2 text-center">
+                    <a href="{% url 'edit_category' cat.id %}"><i class="fa-regular fa-pen-to-square text-gray-500"></i></a>
+                    &emsp;
+                    <a href="{% url 'delete_category' cat.id %}"><i class="fa-regular fa-trash-can text-red-500"></i></a>
+                  </td>
+                </tr>
+              {% endfor %}
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+{% endblock %}

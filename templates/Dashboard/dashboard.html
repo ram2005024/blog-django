@@ -1,0 +1,28 @@
+{% extends 'base.html' %}
+{% block content %}
+  <div class="w-11/12 mx-auto max-sm:w-full mt-10">
+    <div class="flex gap-5">
+      {% comment %}Side bar{% endcomment %}
+      {% include 'Dashboard/sidebar.html' %}
+      {% comment %}Right section{% endcomment %}
+      <div class="flex gap-4 flex-1 justify-between h-10/12">
+        <div class="border border-gray-100 rounded-md shadow-sm flex flex-col w-1/2">
+          <div class="text-center py-2 text-xl bg-slate-100 rounded-t-md">
+            <h2 class="font-serif">All Categories</h2>
+          </div>
+          <div class="py-4 text-xl font-serif h-full flex items-center justify-center">
+            <span>{{ catCount }}</span>
+          </div>
+        </div>
+        <div class="border border-gray-100 rounded-md shadow-sm flex flex-col flex-1">
+          <div class="text-center py-2 text-xl bg-slate-100 rounded-t-md">
+            <h2 class="font-serif">All Posts</h2>
+          </div>
+          <div class="py-4 text-xl font-serif h-full flex items-center justify-center">
+            <span>{{ postCount }}</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+{% endblock %}

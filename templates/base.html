@@ -30,7 +30,7 @@
             </div>
           {% else %}
             <div class="flex gap-2 items-center">
-              <span>{{ user }}</span>
+              <a href="{% url 'dashboard' %}">Dashboard</a>
               <a href="{% url 'logout' %}" class="px-4 cursor-pointer h-fit rounded-md bg-emerald-500 text-white p-2">Logout</a>
             </div>
           {% endif %}

@@ -1,0 +1,21 @@
+{% extends 'base.html' %}
+{% block content %}
+  <div class="w-11/12 mx-auto max-sm:w-full mt-10">
+    <div class="flex gap-10">
+      {% comment %}Side bar{% endcomment %}
+      {% include 'Dashboard/sidebar.html' %}
+      {% comment %}Right section{% endcomment %}
+
+      <form method="post">
+        <h1 class="text-2xl mb-4">Add Categories</h1>
+        {% csrf_token %}
+        <p class="text-red-400">{{ form.non_field_errors }}</p>
+        {% for field in form %}
+          {{ field.errors }}
+          {{ field }}
+        {% endfor %}
+        <button type="submit" class="px-4 w-fit self-end cursor-pointer p-2 h-fit bg-amber-400 rounded-md text-black">Add</button>
+      </form>
+    </div>
+  </div>
+{% endblock %}

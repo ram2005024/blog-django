@@ -1,0 +1,12 @@
+<div class="flex flex-col gap-1.5 bg-gray-100 h-fit">
+  <a href="{% url 'dashboard' %}" class="w-xs py-2 
+  {% if '/dashboard' == request.path %}
+    bg-amber-400
+  {% endif %}
+     rounded-sm pl-3 transition-colors duration-500 ease-in">Dashboard</a>
+  <a href="{% url 'categories_dashboard' %}" class="w-xs py-2 rounded-sm pl-3 transition-colors duration-500 ease-in  {% if 'dashboard/categories' in request.path %}
+    bg-amber-400
+  {% endif %}">Categories</a>
+  <a href="" class="w-xs py-2 rounded-sm pl-3">Posts</a>
+  <a href="" class="w-xs py-2 rounded-sm pl-3">Logout</a>
+</div>
