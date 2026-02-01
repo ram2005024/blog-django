@@ -67,7 +67,7 @@ def add_posts(request):
           post.save()
           return redirect("posts")
     else:
-         print('Form is not valid')
+         
          return render(request,"dashboard/add_posts.html",context={
             'form':form
          })
@@ -76,4 +76,29 @@ def add_posts(request):
     return render(request,'dashboard/add_posts.html',context={
        'form':form
     })
-   
+def edit_posts(request,id):
+  post=get_object_or_404(Blog,id=id)
+  if request.method=='POST':
+    form=PostForm(request.POST,request.FILES,instance=post)
+    if form.is_valid():
+      post=form.save(commit=False)
+      post.author=request.user
+      post.save()
+      title=form.cleaned_data['title']
+      post.slug=slugify(title) + '-' + str(post.id)
+      post.save()
+      return redirect("posts")
+    else:
+         
+         return render(request,"dashboard/edit_posts.html",context={
+            'form':form
+         })
+  else:
+    form=PostForm(instance=post)
+    return render(request,'dashboard/edit_posts.html',context={
+       'form':form
+    })
+def delete_posts(request,id):
+   post=get_object_or_404(Blog,id=id)
+   post.delete()
+   return redirect('posts')

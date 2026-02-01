@@ -10,6 +10,8 @@ urlpatterns = [
      path("categories/delete/<int:id>",views.delete_category,name='delete_category'),
     #  Posts endpoints
      path("posts",views.posts,name="posts"),
-     path("posts/add",views.add_posts,name='add_posts')
+     path("posts/add",views.add_posts,name='add_posts'),
+     path("posts/edit/<int:id>",views.edit_posts,name='edit_posts'),
+     path("posts/delete/<int:id>",views.delete_posts,name='delete_posts')
  ]
  
