@@ -1,5 +1,6 @@
 from django.shortcuts import render
-from .models import Blog,Category
+from django.http import HttpResponseRedirect
+from .models import Blog,Category,Comment
 from django.shortcuts import get_object_or_404
 from django.db.models import Q
 # Create your views here.
@@ -16,10 +17,20 @@ def get_category_posts(request,id):
 
 # View for single blog handle
 def single_blog(request,pId):
+    # Get the comment for the blog if exists
     single_blog=Blog.objects.get(slug=pId,status='Published')
-    category=Category.objects.get(id=single_blog.category_id)
+    if request.method=='POST':
+        comment=Comment()
+        comment.user=request.user;
+        comment.comment=request.POST['comment']
+        comment.blog=single_blog
+        comment.save()
+        return HttpResponseRedirect(request.path_info)
+    comment=Comment.objects.filter(blog__slug=pId,blog__status='Published')
+    commentCount=comment.count()
     
-    return render(request,'single_blog.html',context={'single_blog':single_blog,'category':category})
+    category=Category.objects.get(id=single_blog.category_id)
+    return render(request,'single_blog.html',context={'single_blog':single_blog,'category':category,'comments':comment,'commentCount':commentCount})
 
 # View for search blog
 def search_blog(request):
@@ -27,4 +38,3 @@ def search_blog(request):
     # Fetch the blogs matching the keyword
     blogs=Blog.objects.filter(Q(title__icontains=keyword)|Q(short_body__icontains=keyword)|Q(short_description__icontains=keyword) ,status='Published')
     return render(request,'search_blogs.html',context={'posts':blogs,'keyword':keyword})
-    

@@ -26,6 +26,32 @@
           <!-- Post body -->
           <section class="mb-8">
             <p class="text-xl mb-6">{{ single_blog.short_body }}</p>
+            <div class="flex flex-col mt-5 gap-3">
+              <h2 class="text-3xl font-serif">Comments ({{ commentCount }})</h2>
+              <div class="flex flex-col gap-2">
+                {% for comment in comments %}
+                  <div class="border border-gray-100 rounded-lg p-3 px-5 flex flex-col gap-1.5">
+                    <span class="text-xl text-slate-700">{{ comment.comment }}</span>
+                    <span class="text-sm text-gray-400">By {{ comment.user }} &emsp; {{ comment.created_at|timesince }} ago</span>
+                  </div>
+                {% endfor %}
+
+                {% if not comments %}
+                  <h2>No comments yet</h2>
+                {% endif %}
+                {% if not request.user.is_authenticated %}
+                  <div class="text-gray-500">
+                    Please <a href="{% url 'login' %}" class="text-indigo-600">login</a> to comment
+                  </div>
+                {% else %}
+                  <form method="post" class="rounded-mg w-sm p-3">
+                    {% csrf_token %}
+                    <textarea name="comment" placeholder="Enter your comment..." class="text-sm text-gray-400 border border-gray-400 pl-6 p-3 resize-none w-full outline-none rounded-md" rows="10"></textarea>
+                    <button type="submit" class="px-3 p-1.5 w-fit mt-4 rounded-md bg-indigo-500 text-white">Submit</button>
+                  </form>
+                {% endif %}
+              </div>
+            </div>
           </section>
         </article>
       </div>
