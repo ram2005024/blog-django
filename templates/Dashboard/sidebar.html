@@ -12,5 +12,14 @@
     bg-amber-400
   {% endif %}
     ">Posts</a>
+
+  {% if perms.auth.view_user %}
+    <a href="{% url 'users' %}" class="w-xs py-2 rounded-sm pl-3 
+    {% if '/users' in request.path %}
+          bg-amber-400
+    {% endif %}
+      ">Users</a>
+  {% endif %}
+
   <a href="" class="w-xs py-2 rounded-sm pl-3">Logout</a>
 </div>

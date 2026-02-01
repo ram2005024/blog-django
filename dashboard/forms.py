@@ -1,6 +1,7 @@
 from django import forms
 from blogs.models import Category,Blog
-
+from django.contrib.auth.models import User
+from django.contrib.auth.forms import UserCreationForm
 class CategoryForm(forms.ModelForm):
 
     class Meta:
@@ -43,4 +44,59 @@ class PostForm(forms.ModelForm):
                 field.widget.attrs.update({
                     'class': 'h-4 w-4 text-indigo-600 border-gray-300 rounded focus:ring-indigo-500'
                 })
+class UserForm(UserCreationForm):
+    class Meta:
+        model=User
+        fields=('first_name','last_name','email','user_permissions','groups','is_active','username','is_staff','is_superuser')
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        for field_label,field in self.fields.items():
+            widget_type=field.widget.__class__.__name__
+            if widget_type in ['TextInput','Textarea','EmailInput','PasswordInput']:
+                field.widget.attrs.update({
+                    'placeholder':f'Enter {field_label}',
+                    'class':'w-full p-2 pl-5 text-gray-400 resize-none ring ring-gray-200 rounded-lg outline-none text-sm transition-all duration-200 focus:ring-indigo-400'
 
+                })
+            elif widget_type=='Select' or widget_type=='SelectMultiple':
+                 field.widget.attrs.update({
+                    'class': 'w-full ring ring-gray-200 rounded-lg outline-none text-sm transition-all duration-200 focus:ring-indigo-400 p-2 '
+                })
+            elif widget_type == 'ClearableFileInput':
+                 field.widget.attrs.update({
+                'class': 'block w-full text-sm text-gray-500file:mr-4 file:py-2 file:px-4 file:rounded-md file:border-0file:text-sm file:font-semiboldfile:bg-indigo-600 file:text-whitehover:file:bg-indigo-700'
+    })
+
+            elif widget_type == 'CheckboxInput':
+                field.widget.attrs.update({
+                    'class': 'h-4 w-4 text-indigo-600 border-gray-300 rounded focus:ring-indigo-500'
+                })
+                
+class EditUserForm(forms.ModelForm):
+    class Meta:
+        model=User
+        fields=('first_name','last_name','email','user_permissions','groups','is_active','username','is_staff','is_superuser')
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        for field_label,field in self.fields.items():
+            widget_type=field.widget.__class__.__name__
+            if widget_type in ['TextInput','Textarea','EmailInput','PasswordInput']:
+                field.widget.attrs.update({
+                    'placeholder':f'Enter {field_label}',
+                    'class':'w-full p-2 pl-5 text-gray-400 resize-none ring ring-gray-200 rounded-lg outline-none text-sm transition-all duration-200 focus:ring-indigo-400'
+
+                })
+            elif widget_type=='Select' or widget_type=='SelectMultiple':
+                 field.widget.attrs.update({
+                    'class': 'w-full ring ring-gray-200 rounded-lg outline-none text-sm transition-all duration-200 focus:ring-indigo-400 p-2 '
+                })
+            elif widget_type == 'ClearableFileInput':
+                 field.widget.attrs.update({
+                'class': 'block w-full text-sm text-gray-500file:mr-4 file:py-2 file:px-4 file:rounded-md file:border-0file:text-sm file:font-semiboldfile:bg-indigo-600 file:text-whitehover:file:bg-indigo-700'
+    })
+
+            elif widget_type == 'CheckboxInput':
+                field.widget.attrs.update({
+                    'class': 'h-4 w-4 text-indigo-600 border-gray-300 rounded focus:ring-indigo-500'
+                })
+                
